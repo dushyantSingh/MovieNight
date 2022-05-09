@@ -21,6 +21,11 @@
 		10D586A3282907990085648B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D586A2282907990085648B /* CustomTextField.swift */; };
 		10D586A52829079D0085648B /* CustomTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10D586A42829079D0085648B /* CustomTextField.xib */; };
 		10D586A82829084F0085648B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D586A72829084F0085648B /* Theme.swift */; };
+		10D586AB28290BDC0085648B /* MovieTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D586AA28290BDC0085648B /* MovieTarget.swift */; };
+		10D586AD28290BE30085648B /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D586AC28290BE30085648B /* MovieService.swift */; };
+		10D586AF28290BEF0085648B /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D586AE28290BEF0085648B /* MovieModel.swift */; };
+		10D586B2282912CE0085648B /* NetworkEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D586B1282912CE0085648B /* NetworkEvents.swift */; };
+		10D586B5282916FE0085648B /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D586B4282916FE0085648B /* ServiceFactory.swift */; };
 		6FF71FC6F162ECA586AE921B /* Pods_MovieNightTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75427B407B9D6F1FC93A968B /* Pods_MovieNightTests.framework */; };
 		E7A92361800E173701C11181 /* Pods_MovieNight_MovieNightUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2634721D6BD9DC9B041ED2B7 /* Pods_MovieNight_MovieNightUITests.framework */; };
 /* End PBXBuildFile section */
@@ -60,6 +65,11 @@
 		10D586A2282907990085648B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		10D586A42829079D0085648B /* CustomTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTextField.xib; sourceTree = "<group>"; };
 		10D586A72829084F0085648B /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		10D586AA28290BDC0085648B /* MovieTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTarget.swift; sourceTree = "<group>"; };
+		10D586AC28290BE30085648B /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
+		10D586AE28290BEF0085648B /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
+		10D586B1282912CE0085648B /* NetworkEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEvents.swift; sourceTree = "<group>"; };
+		10D586B4282916FE0085648B /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 		2634721D6BD9DC9B041ED2B7 /* Pods_MovieNight_MovieNightUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieNight_MovieNightUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75427B407B9D6F1FC93A968B /* Pods_MovieNightTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieNightTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CAACB9FA8C67CF5EB08E96 /* Pods-MovieNight-MovieNightUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieNight-MovieNightUITests.debug.xcconfig"; path = "Target Support Files/Pods-MovieNight-MovieNightUITests/Pods-MovieNight-MovieNightUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -126,9 +136,12 @@
 			children = (
 				10D58669282902600085648B /* AppDelegate.swift */,
 				10D5866B282902600085648B /* SceneDelegate.swift */,
+				10D586B0282912AA0085648B /* NetworkEvents */,
 				10D586A02829077D0085648B /* Common */,
 				10D58699282906890085648B /* MovieHome */,
+				10D586A928290BB60085648B /* MovieService */,
 				10D58672282902640085648B /* Assets.xcassets */,
+				10D586B3282916EB0085648B /* Factory */,
 				10D58674282902640085648B /* LaunchScreen.storyboard */,
 				10D58677282902640085648B /* Info.plist */,
 			);
@@ -186,6 +199,32 @@
 				10D586A72829084F0085648B /* Theme.swift */,
 			);
 			path = Theme;
+			sourceTree = "<group>";
+		};
+		10D586A928290BB60085648B /* MovieService */ = {
+			isa = PBXGroup;
+			children = (
+				10D586AA28290BDC0085648B /* MovieTarget.swift */,
+				10D586AC28290BE30085648B /* MovieService.swift */,
+				10D586AE28290BEF0085648B /* MovieModel.swift */,
+			);
+			path = MovieService;
+			sourceTree = "<group>";
+		};
+		10D586B0282912AA0085648B /* NetworkEvents */ = {
+			isa = PBXGroup;
+			children = (
+				10D586B1282912CE0085648B /* NetworkEvents.swift */,
+			);
+			path = NetworkEvents;
+			sourceTree = "<group>";
+		};
+		10D586B3282916EB0085648B /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				10D586B4282916FE0085648B /* ServiceFactory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 		352D8FE8622B9F0E99444427 /* Frameworks */ = {
@@ -469,12 +508,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10D586AF28290BEF0085648B /* MovieModel.swift in Sources */,
+				10D586AB28290BDC0085648B /* MovieTarget.swift in Sources */,
 				10D5869D282906E90085648B /* MovieHomeViewModel.swift in Sources */,
 				10D5869B282906CE0085648B /* MovieHomeViewController.swift in Sources */,
+				10D586B5282916FE0085648B /* ServiceFactory.swift in Sources */,
 				10D5866A282902600085648B /* AppDelegate.swift in Sources */,
 				10D586A82829084F0085648B /* Theme.swift in Sources */,
 				10D5866C282902600085648B /* SceneDelegate.swift in Sources */,
+				10D586AD28290BE30085648B /* MovieService.swift in Sources */,
 				10D586A3282907990085648B /* CustomTextField.swift in Sources */,
+				10D586B2282912CE0085648B /* NetworkEvents.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

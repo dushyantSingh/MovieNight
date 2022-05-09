@@ -11,4 +11,8 @@ import UIKit
 class MovieHomeViewController: UIViewController {
     var viewModel: MovieHomeViewModel!
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel.searchMovies(searchText: "Marvel")
+    }
 }
