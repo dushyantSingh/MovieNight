@@ -8,18 +8,28 @@
 import Foundation
 import UIKit
 import RxSwift
+import RxCocoa
 
 class MovieHomeViewController: UIViewController {
     var viewModel: MovieHomeViewModel!
     @IBOutlet weak var movieSearchTextField: CustomTextField!
+    @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var movieListView: UIView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var searchButton: PrimaryButton!
+    @IBOutlet weak var backButton: PrimaryButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
+    private var movies = BehaviorRelay<[Movie]>(value: [])
 
     private let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupEvents()
+        setupMoviesList()
+        setupCollectionView()
     }
 }
 
@@ -27,6 +37,8 @@ private extension MovieHomeViewController {
     func setupView() {
         movieSearchTextField.title = "Movie name"
         movieSearchTextField.titleFontSize = .large
+        backButton.setTitle("Back", for: .normal)
+        movieTitle.font = Theme.Font.thinFont(with: 32)
         searchButton.setTitle("Search", for: .normal)
         searchButton.rx.tap.asObservable()
             .map { [weak self] in
@@ -35,7 +47,31 @@ private extension MovieHomeViewController {
             .filterEmpty()
             .bind(to: viewModel.getMovies)
             .disposed(by: disposeBag)
+
+        backButton.rx.tap.asObservable()
+            .map { true }
+            .bind(to: movieListView.rx.isHidden)
+            .disposed(by: disposeBag)
+
+        backButton.rx.tap.asObservable()
+            .map { false }
+            .bind(to: searchView.rx.isHidden)
+            .disposed(by: disposeBag)
     }
+
+    func setupMoviesList() {
+        movies.asObservable()
+            .map { $0.count == 0 }
+            .bind(to: movieListView.rx.isHidden)
+            .disposed(by: disposeBag)
+
+        movies.asObservable()
+            .map { $0.count != 0 }
+            .bind(to: searchView.rx.isHidden)
+            .disposed(by: disposeBag)
+
+    }
+
     func setupEvents() {
         viewModel.events.asObservable()
             .subscribe(onNext: { [weak self] event in
@@ -46,7 +82,9 @@ private extension MovieHomeViewController {
                 case .error(let message):
                     self?.showErrorAlert(title: "Opps", message: message)
                 case .displayMovies(let response):
-                    print(response)
+                    self?.movies.accept(response)
+                    self?.movieTitle.text = self?.movieSearchTextField.text
+                    self?.collectionView.reloadData()
                 }
             })
             .disposed(by: disposeBag)
@@ -62,3 +100,35 @@ private extension MovieHomeViewController {
         self.navigationController?.present(alertController, animated: true)
     }
 }
+
+extension MovieHomeViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return movies.value.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(MovieCollectionViewCell.self)", for: indexPath) as? MovieCollectionViewCell
+            else { return UICollectionViewCell() }
+
+        let movie = movies.value[indexPath.row]
+        cell.configure(imageURLString: movie.poster ?? "")
+        return cell
+    }
+
+    private func setupCollectionView() {
+        collectionView.dataSource = self
+        collectionView.registerCellClassForNib(cellClass: MovieCollectionViewCell.self)
+    }
+}
+
+extension UICollectionView {
+    func registerCellClassForNib(cellClass: Swift.AnyClass) {
+        let identifier = "\(cellClass)"
+        self.register(UINib(nibName: identifier,
+                            bundle: Bundle(for: cellClass)),
+                      forCellWithReuseIdentifier: identifier)
+    }
+}
+
