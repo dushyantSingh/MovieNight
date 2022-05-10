@@ -10,9 +10,19 @@ import UIKit
 
 class MovieHomeViewController: UIViewController {
     var viewModel: MovieHomeViewModel!
-
+    @IBOutlet weak var movieSearchTextField: CustomTextField!
+    @IBOutlet weak var searchButton: PrimaryButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.searchMovies(searchText: "Marvel")
+        setupView()
+    }
+}
+
+private extension MovieHomeViewController {
+    func setupView() {
+        movieSearchTextField.title = "Movie name"
+        movieSearchTextField.titleFontSize = .large
+        searchButton.setTitle("Search", for: .normal)
     }
 }

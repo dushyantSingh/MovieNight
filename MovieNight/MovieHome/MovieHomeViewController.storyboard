@@ -15,13 +15,62 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="II0-5Y-6PF">
+                                <rect key="frame" x="0.0" y="54" width="414" height="300"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KdS-W8-AA0" customClass="CustomTextField" customModule="MovieNight" customModuleProvider="target">
+                                        <rect key="frame" x="24" y="0.0" width="366" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="ESh-rb-7tP"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RgC-xh-dRr" customClass="PrimaryButton" customModule="MovieNight" customModuleProvider="target">
+                                        <rect key="frame" x="24" y="178" width="366" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="4HJ-KG-1uY"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain"/>
+                                    </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="7Xo-Xb-7dY">
+                                        <rect key="frame" x="197" y="116" width="20" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="Ywf-K0-nAb"/>
+                                        </constraints>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="RgC-xh-dRr" secondAttribute="trailing" constant="24" id="8m6-1L-VUQ"/>
+                                    <constraint firstItem="RgC-xh-dRr" firstAttribute="leading" secondItem="II0-5Y-6PF" secondAttribute="leading" constant="24" id="Jck-Ng-i0h"/>
+                                    <constraint firstAttribute="height" constant="300" id="Osi-uH-BA9"/>
+                                    <constraint firstItem="7Xo-Xb-7dY" firstAttribute="centerX" secondItem="RgC-xh-dRr" secondAttribute="centerX" id="UAe-EP-WXg"/>
+                                    <constraint firstItem="KdS-W8-AA0" firstAttribute="leading" secondItem="II0-5Y-6PF" secondAttribute="leading" constant="24" id="bJ7-gP-OKY"/>
+                                    <constraint firstAttribute="trailing" secondItem="KdS-W8-AA0" secondAttribute="trailing" constant="24" id="ixQ-UG-8mI"/>
+                                    <constraint firstItem="RgC-xh-dRr" firstAttribute="top" secondItem="7Xo-Xb-7dY" secondAttribute="bottom" constant="25" id="l4n-Lh-jM0"/>
+                                    <constraint firstItem="KdS-W8-AA0" firstAttribute="top" secondItem="II0-5Y-6PF" secondAttribute="top" id="mwf-yW-mG5"/>
+                                    <constraint firstItem="7Xo-Xb-7dY" firstAttribute="top" secondItem="KdS-W8-AA0" secondAttribute="bottom" constant="56" id="woP-va-liI"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="II0-5Y-6PF" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Kig-JN-xp9"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="II0-5Y-6PF" secondAttribute="trailing" id="wFU-BW-aT3"/>
+                            <constraint firstItem="II0-5Y-6PF" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="10" id="zdL-v9-MKs"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="movieSearchTextField" destination="KdS-W8-AA0" id="3k7-wl-Qgl"/>
+                        <outlet property="searchButton" destination="RgC-xh-dRr" id="0wg-6S-6ba"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="125"/>
+            <point key="canvasLocation" x="137.68115942028987" y="124.55357142857142"/>
         </scene>
     </scenes>
     <resources>
