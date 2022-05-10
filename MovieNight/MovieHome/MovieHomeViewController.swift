@@ -39,12 +39,26 @@ private extension MovieHomeViewController {
     func setupEvents() {
         viewModel.events.asObservable()
             .subscribe(onNext: { [weak self] event in
-                if case .loading = event {
+                self?.activityIndicator.stopAnimating()
+                switch event {
+                case .loading:
                     self?.activityIndicator.startAnimating()
-                } else {
-                    self?.activityIndicator.stopAnimating()
+                case .error(let message):
+                    self?.showErrorAlert(title: "Opps", message: message)
+                case .displayMovies(let response):
+                    print(response)
                 }
             })
             .disposed(by: disposeBag)
+    }
+
+    func showErrorAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title,
+                                                message: message,
+                                                preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Okay",
+                                        style: .default)
+        alertController.addAction(alertAction)
+        self.navigationController?.present(alertController, animated: true)
     }
 }
