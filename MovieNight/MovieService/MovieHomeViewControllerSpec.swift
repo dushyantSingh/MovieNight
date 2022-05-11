@@ -26,7 +26,7 @@ class MovieHomeViewControllerSpec: QuickSpec {
             }
             context("when view loads") {
                 it("should not show movies") {
-                    expect(subject.collectionView.isHidden) == true
+                    expect(subject.movieListView.isHidden) == true
                 }
                 it("should not search any movies") {
                     expect(subject.collectionView.numberOfItems(inSection: 0)) == 0

@@ -36,7 +36,7 @@ class MovieHomeViewController: UIViewController {
 
 private extension MovieHomeViewController {
     func setupView() {
-        collectionView.isHidden = true
+        movieListView.isHidden = true
         searchView.isHidden = false
 
         movieSearchTextField.title = "Movie name"
