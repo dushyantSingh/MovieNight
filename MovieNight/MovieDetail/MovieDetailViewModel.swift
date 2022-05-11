@@ -21,7 +21,8 @@ struct MovieDetailViewModel {
     private let disposeBag = DisposeBag()
     private let service: MovieServiceType
 
-    init(movie: Movie, service: MovieServiceType) {
+    init(movie: Movie,
+         service: MovieServiceType) {
         selectedMovie = movie
         self.service = service
     }

@@ -27,6 +27,7 @@ class MovieHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setupButtonActions()
         setupEvents()
         setupMoviesList()
         setupCollectionView()
@@ -35,11 +36,18 @@ class MovieHomeViewController: UIViewController {
 
 private extension MovieHomeViewController {
     func setupView() {
+        collectionView.isHidden = true
+        searchView.isHidden = false
+
         movieSearchTextField.title = "Movie name"
         movieSearchTextField.titleFontSize = .large
-        backButton.setTitle("Back", for: .normal)
         movieTitle.font = Theme.Font.thinFont(with: 32)
+
+        backButton.setTitle("Back", for: .normal)
         searchButton.setTitle("Search", for: .normal)
+    }
+
+    func setupButtonActions() {
         searchButton.rx.tap.asObservable()
             .map { [weak self] in
                 return self?.movieSearchTextField.text ?? ""
@@ -69,7 +77,6 @@ private extension MovieHomeViewController {
             .map { $0.count != 0 }
             .bind(to: searchView.rx.isHidden)
             .disposed(by: disposeBag)
-
     }
 
     func setupEvents() {
@@ -82,14 +89,19 @@ private extension MovieHomeViewController {
                 case .error(let message):
                     self?.showErrorAlert(title: "Opps", message: message)
                 case .displayMovies(let response):
-                    self?.movies.accept(response)
-                    self?.movieTitle.text = self?.movieSearchTextField.text
-                    self?.collectionView.reloadData()
+                    self?.displayMovie(response)
                 case .displayViewController(let vc):
-                    self?.navigationController?.pushViewController(vc, animated: true)
+                    self?.navigationController?
+                        .pushViewController(vc,animated: true)
                 }
             })
             .disposed(by: disposeBag)
+    }
+
+    func displayMovie(_ movies: [Movie]) {
+        self.movies.accept(movies)
+        movieTitle.text = movieSearchTextField.text
+        collectionView.reloadData()
     }
 
     func showErrorAlert(title: String, message: String) {
@@ -103,6 +115,14 @@ private extension MovieHomeViewController {
     }
 }
 
+private extension MovieHomeViewController {
+    func setupCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.registerCellClassForNib(cellClass: MovieCollectionViewCell.self)
+    }
+}
+
 extension MovieHomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
@@ -112,17 +132,11 @@ extension MovieHomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(MovieCollectionViewCell.self)", for: indexPath) as? MovieCollectionViewCell
-            else { return UICollectionViewCell() }
+        else { return UICollectionViewCell() }
 
         let movie = movies.value[indexPath.row]
         cell.configure(imageURLString: movie.poster ?? "")
         return cell
-    }
-
-    private func setupCollectionView() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.registerCellClassForNib(cellClass: MovieCollectionViewCell.self)
     }
 }
 
