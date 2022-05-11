@@ -14,16 +14,19 @@ struct MovieHomeViewModel {
         case loading
         case error(String)
         case displayMovies([Movie])
+        case displayViewController(UIViewController)
     }
 
     private let service: MovieServiceType
     let getMovies = PublishSubject<String>()
     let events = PublishSubject<Event>()
+    let selectedMovie = PublishSubject<Movie>()
     var disposeBag = DisposeBag()
 
     init(service: MovieServiceType = ServiceFactory.movieService) {
         self.service = service
         setupMovieSearch()
+        setupSelectedMovie()
     }
 }
 
@@ -48,6 +51,21 @@ private extension MovieHomeViewModel {
                     return .loading
                 }
             }
+            .bind(to: events)
+            .disposed(by: disposeBag)
+    }
+
+    func setupSelectedMovie() {
+        selectedMovie.asObservable()
+            .map { movie in
+                let service = ServiceFactory.movieService
+                let viewModel = MovieDetailViewModel(movie: movie,
+                                                     service: service)
+                let vc = UIViewController.make(viewController: MovieDetailViewController.self)
+                vc.viewModel = viewModel
+                return vc
+            }
+            .map { .displayViewController($0) }
             .bind(to: events)
             .disposed(by: disposeBag)
     }

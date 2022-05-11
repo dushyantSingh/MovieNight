@@ -11,13 +11,14 @@ import RxSwift
 
 enum MovieTarget {
     case getMovies(searchText: String)
+    case getMovieDetails(movieId: String)
 }
 
 extension MovieTarget: TargetType {
 
     var baseURL: URL {
         switch self {
-        case .getMovies:
+        case .getMovies, .getMovieDetails:
             return Enviornment.manager.baseURL
         }
     }
@@ -40,6 +41,10 @@ extension MovieTarget: TargetType {
             return .requestParameters(parameters: ["apikey": Enviornment.manager.apiKey,
                                                    "s": searchText,
                                                    "type": "movie"],
+                                      encoding: URLEncoding.queryString)
+        case .getMovieDetails(let movieId):
+            return .requestParameters(parameters: ["apikey": Enviornment.manager.apiKey,
+                                                   "i": movieId],
                                       encoding: URLEncoding.queryString)
         }
     }

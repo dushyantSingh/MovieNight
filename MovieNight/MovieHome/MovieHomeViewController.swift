@@ -85,6 +85,8 @@ private extension MovieHomeViewController {
                     self?.movies.accept(response)
                     self?.movieTitle.text = self?.movieSearchTextField.text
                     self?.collectionView.reloadData()
+                case .displayViewController(let vc):
+                    self?.navigationController?.pushViewController(vc, animated: true)
                 }
             })
             .disposed(by: disposeBag)
@@ -119,7 +121,16 @@ extension MovieHomeViewController: UICollectionViewDataSource {
 
     private func setupCollectionView() {
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.registerCellClassForNib(cellClass: MovieCollectionViewCell.self)
+    }
+}
+
+extension MovieHomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        let movie = movies.value[indexPath.row]
+        viewModel.selectedMovie.onNext(movie)
     }
 }
 

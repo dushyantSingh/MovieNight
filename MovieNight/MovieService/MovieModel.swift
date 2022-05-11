@@ -8,10 +8,10 @@
 import Foundation
 
 struct Movie: Codable {
-    var imdbID: String?
-    var title: String?
-    var poster: String?
-    var year: String?
+    let imdbID: String?
+    let title: String?
+    let poster: String?
+    let year: String?
 
     private enum CodingKeys: String, CodingKey {
         case imdbID
@@ -22,7 +22,7 @@ struct Movie: Codable {
 }
 
 struct SearchResponse: Codable {
-    var search: [Movie]?
+    let search: [Movie]?
     private enum CodingKeys: String, CodingKey {
         case search = "Search"
     }

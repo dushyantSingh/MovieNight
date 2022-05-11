@@ -11,6 +11,7 @@ import RxSwift
 
 protocol MovieServiceType {
     func retrieveMovieList(text: String) -> Observable<NetworkingEvent>
+    func retrieveMovieDetail(movieId: String) -> Observable<NetworkingEvent>
 }
 
 class MovieService: MovieServiceType {
@@ -32,6 +33,27 @@ class MovieService: MovieServiceType {
                     do {
                        let movieList = try decoder.decode(SearchResponse.self, from: response.data)
                         return .success(movieList)
+                    } catch {
+                        print(error.localizedDescription)
+                        return .failed
+                    }
+                } else {
+                    return .failed
+                }
+            }.startWith(.waiting)
+    }
+
+    func retrieveMovieDetail(movieId: String) -> Observable<NetworkingEvent> {
+        return self.provider.rx
+            .request(.getMovieDetails(movieId: movieId))
+            .asObservable()
+            .map { response in
+                if response.is2xx() {
+                    let decoder = JSONDecoder()
+                    do {
+                       let movieDetail = try decoder.decode(MovieDetail.self,
+                                                            from: response.data)
+                        return .success(movieDetail)
                     } catch {
                         print(error.localizedDescription)
                         return .failed
