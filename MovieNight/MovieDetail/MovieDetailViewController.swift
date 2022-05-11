@@ -12,6 +12,7 @@ import RxSwift
 class MovieDetailViewController: UIViewController {
     var viewModel: MovieDetailViewModel!
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var plotDescription: UILabel!
     @IBOutlet weak var movieTitle: UILabel!
@@ -41,6 +42,10 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var imdbRatingTitle: UILabel!
     @IBOutlet weak var imdbRating: UILabel!
 
+    @IBOutlet weak var plotWidth: NSLayoutConstraint!
+    @IBOutlet weak var stackViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var titleLabelWidth: NSLayoutConstraint!
+
     private let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +56,13 @@ class MovieDetailViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.fetchMovieDetails()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        stackViewWidth.constant = scrollView.frame.width - 24
+        plotWidth.constant = scrollView.frame.width - 24
+        titleLabelWidth.constant = scrollView.frame.width - 24
     }
 }
 
